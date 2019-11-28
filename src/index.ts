@@ -1,10 +1,10 @@
 import { Script } from "vm";
-import { Global, Config } from "@jest/types";
+import { Config, Global } from "@jest/types";
 import { installCommonGlobals } from "jest-util";
-import mock, { ModuleMocker } from "jest-mock";
+import { ModuleMocker } from "jest-mock";
 import { JestFakeTimers as FakeTimers } from "@jest/fake-timers";
-import { JestEnvironment, EnvironmentContext } from "@jest/environment";
-import { JSDOM, VirtualConsole, ResourceLoader } from "jsdom";
+import { EnvironmentContext, JestEnvironment } from "@jest/environment";
+import { JSDOM, ResourceLoader, VirtualConsole } from "jsdom";
 
 // The `Window` interface does not have an `Error.stackTraceLimit` property, but
 // `JSDOMEnvironment` assumes it is there.
@@ -76,7 +76,7 @@ class JSDOMEnvironment implements JestEnvironment {
       return originalRemoveListener.apply(this, args);
     };
 
-    this.moduleMocker = new mock.ModuleMocker(global as any);
+    this.moduleMocker = new ModuleMocker(global as any);
 
     const timerConfig = {
       idToRef: (id: number) => id,
