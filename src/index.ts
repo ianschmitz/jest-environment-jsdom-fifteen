@@ -4,7 +4,7 @@ import { installCommonGlobals } from "jest-util";
 import mock, { ModuleMocker } from "jest-mock";
 import { JestFakeTimers as FakeTimers } from "@jest/fake-timers";
 import { JestEnvironment, EnvironmentContext } from "@jest/environment";
-import { JSDOM, VirtualConsole } from "jsdom";
+import { JSDOM, VirtualConsole, ResourceLoader } from "jsdom";
 
 // The `Window` interface does not have an `Error.stackTraceLimit` property, but
 // `JSDOMEnvironment` assumes it is there.
@@ -25,7 +25,7 @@ class JSDOMEnvironment implements JestEnvironment {
   constructor(config: Config.ProjectConfig, options: EnvironmentContext = {}) {
     // This handles advanced configurations like `userAgent`
     // https://github.com/jsdom/jsdom#advanced-configuration
-    const resourceLoader = new jsdom.ResourceLoader(config.testEnvironmentOptions);
+    const resourceLoader = new ResourceLoader(config.testEnvironmentOptions);
 
     this.dom = new JSDOM("<!DOCTYPE html>", {
       pretendToBeVisual: true,
